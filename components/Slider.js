@@ -15,7 +15,6 @@ export default function MySlider() {
   return (     
     <View>
       <Text style={styles.captionText}>Conditioning Scale</Text>
-      
       <Slider
         style={styles.sliderBase}
         minimumValue={0}

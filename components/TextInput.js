@@ -2,18 +2,22 @@ import React from 'react';
 import {StyleSheet, TextInput, Text} from 'react-native';
 import {useFonts } from 'expo-font';
 
-export default function MyTextInput({onSubmitEditing}) {
+// Component for custom text input
+export default function MyTextInput({ onSubmitEditing }) {
+  // State to track the value of the text input
   const [text, setText] = React.useState('');
-  const [fontsLoaded] = useFonts({'Sigmar': require('../assets/Sigmar/Sigmar-Regular.ttf')});
- 
+  // Load custom font
+  const [fontsLoaded] = useFonts({ 'Sigmar': require('../assets/Sigmar/Sigmar-Regular.ttf') });
+
   return (
+    // TextInput component
     <TextInput
-      placeholder='Avacado Armchair'
-      style={styles.input}
-      onChangeText={newtext => setText(newtext)}
-      onSubmitEditing={a => onSubmitEditing(text)}
-      value={text}
-      maxLength={200}
+      placeholder='Avacado Armchair' // Placeholder text for the input
+      style={styles.input} // Styling for the input
+      onChangeText={newtext => setText(newtext)} // Function to update the state with the new text value
+      onSubmitEditing={a => onSubmitEditing(text)} // Function to be called when editing is submitted
+      value={text} // Current value of the input
+      maxLength={200} // Maximum length of the input
     />
   );
 };

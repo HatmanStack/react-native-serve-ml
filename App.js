@@ -1,7 +1,7 @@
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, View, ScrollView, Text} from 'react-native';
 
 import ImageViewer from './components/ImageViewer';
 import MySlider from './components/Slider';
@@ -20,12 +20,13 @@ export default function App() {
   const passImage = (x) => {setInferredImage(x)};
   
   return (
-    
+      // Main container
       <View style={styles.titlecontainer}>
         <Breathing/>
-      
-    
+        <ScrollView scrollY={true}> 
       <View style={styles.container}>
+      
+        {/* Left column */}
         <View style={styles.columnContainer}>
           <View>
             <MyTextInput onSubmitEditing={passPrompt}/>
@@ -34,6 +35,7 @@ export default function App() {
             <MySlider/>
           </View>
         </View>
+        {/* Right column */}
         <View style={styles.columnContainer}> 
           <View style={styles.columnContainer}> 
             <ImageViewer prompt={prompt} PlaceholderImage={inferredImage}/> 
@@ -42,11 +44,13 @@ export default function App() {
             <Text style={{color: '#FFFFFF', fontSize: 18,fontWeight: 'italic',
                           textAlign: 'center',wordWrap: 'break-word', fontFamily:'Sigmar',
                           letterSpacing: 2, lineHeight: 30,}}>{prompt}</Text>
+          </View>
         </View>
-      </View>
+      
+    {/* Component for inference */}
     <MyInference prompt={prompt} PlaceholderImage={passImage}/> 
-    </View>
-    
+      </View>
+      </ScrollView>
     <StatusBar style="auto" />
     </View>
     
@@ -56,18 +60,21 @@ export default function App() {
 const styles = StyleSheet.create({
   titlecontainer: {
     backgroundColor: '#25292e',
-    position: 'fixed', // or 'absolute
+    position: 'fixed',
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 0,  
+    padding: 50,
+    
   },
   container: {
-    flex: 7/8,
+    flex: 1,
     backgroundColor: '#25292e',
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 50,
+    overflow: 'auto',
   },
   columnContainer: {
     flex: 1,

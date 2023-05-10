@@ -1,58 +1,30 @@
 # React Native App with Expo and Docker
 
-This repository contains a React Native application that utilizes Expo as a framework and Docker to host a Node application. The app is designed to generate questions based on provided images using the VQGANS-Hourglass model hosted on the Hugging Face model hub.
+This repository contains a React Native application that utilizes Expo as a framework and Docker to serve. The app is meant to be used as a scaffold.  Currently it's serving a simple Mobile Net off the shelf classifier model. Simple baseline components are included to aid with different model types. The current version is targeted for the web.
 
 ## Preview
 
 To preview the application, you can visit the hosted version on the Hugging Face Spaces platform at [https://huggingface.co/spaces/Hatman/VQGANS-Hourglass](https://huggingface.co/spaces/Hatman/VQGANS-Hourglass).
 
-## Inference
-
-Inference can be run from component/Inference.js to an exsisting end-point serving a ml application.  The properties are all meant to be placeholders that can be adjusted for specific use cases. 
-
 ## Prerequisites
 
 Before running this application locally, ensure that you have the following dependencies installed on your machine:
 
-- Node.js
+- Node
 - npm (Node Package Manager)
-- Docker
+- Expo
 
 ## Installation
 
 To install and run the application, follow these steps:
 
-1. Clone this repository to your local machine:
 
    ```shell
    git clone https://github.com/your-username/your-repo.git
+   cd react-serve-ml
+   npm install
+   npm web run
    ```
-   
-2. Navigate to the project directory:
-
-	```shell
-	cd react-serve-ml
-	```
-
-3. Install the required dependencies:
-
-	```shell
-	npm install
-	```
-	
-4. Build the Docker container:
-
-	```shell
-	docker build -t react-serve-ml .
-	```
-	
-## Usage
-
-To run the application, execute the following command:
-
-```shell
-docker run -p 3000:3000 your-app
-```
 
 ## Contributing
 

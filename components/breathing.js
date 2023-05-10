@@ -6,7 +6,7 @@ export default function Breathing() {
   const [fontsLoaded] = useFonts({ 'Sigmar': require('../assets/Sigmar/Sigmar-Regular.ttf') });
 
   // Create an array of Animated values using useRef
-  const animatedValues = useRef([...Array(6)].map(() => new Animated.Value(0))).current;
+  const animatedValues = useRef([...Array(12)].map(() => new Animated.Value(0))).current;
 
   useEffect(() => {
     // Define animations for each value in animatedValues
@@ -25,16 +25,23 @@ export default function Breathing() {
         useNativeDriver: false,
       });
 
+      const fast = 300;
+      const medium = 450;
+      const slow = 600;
       // Define delays for each animation
       const delays = [
-        index * 500,
-        index * 300,
-        (5 - index) * 500,
-        index * 800,
-        (5 - index) * 300,
-        index * 500,
-        (5 - index) * 500,
-        (5 - index) * 800,
+        index * fast,
+        index * medium,
+        (11 - index) * fast,
+        index * slow,
+        (11 - index) * medium,    
+        index * fast,
+        (11 - index) * slow,
+        index * medium,
+        (11 - index) * fast,
+        (11 - index) * medium,
+        index * slow,
+        (11 - index) * slow,
       ];
 
       // Create a sequence of animations with delays
@@ -47,17 +54,8 @@ export default function Breathing() {
       });
 
       // Create a sequence of all animation sequences
-      const animationSequences = Animated.sequence([
-        animationSequence[0],
-        animationSequence[1],
-        animationSequence[2],
-        animationSequence[3],
-        animationSequence[4],
-        animationSequence[5],
-        animationSequence[6],
-        animationSequence[7],
-      ]);
-
+      const animationSequences = Animated.sequence(animationSequence);
+      
       // Create a loop for the animation sequence
       return Animated.loop(animationSequences);
     });
@@ -83,21 +81,27 @@ export default function Breathing() {
   }));
 
   return (
-    <View style={styles.container}>
+    <View style={styles.containerbreathing}>
       <Text style={styles.heading}>
-        <Animated.Text style={[styles.char, animatedStyles[0]]}>S</Animated.Text>
-        <Animated.Text style={[styles.char, animatedStyles[1]]}>U</Animated.Text>
-        <Animated.Text style={[styles.char, animatedStyles[2]]}>N</Animated.Text>
-        <Animated.Text style={[styles.char, animatedStyles[3]]}>D</Animated.Text>
-        <Animated.Text style={[styles.char, animatedStyles[4]]}>A</Animated.Text>
-        <Animated.Text style={[styles.char, animatedStyles[5]]}>E</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[0]]}>R</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[1]]}>E</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[2]]}>A</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[3]]}>C</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[4]]}>T</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[5]]}>-</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[6]]}>N</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[7]]}>A</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[8]]}>T</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[9]]}>I</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[10]]}>V</Animated.Text>
+        <Animated.Text style={[styles.char, animatedStyles[11]]}>E</Animated.Text>
       </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
+    containerbreathing: {
     flex: 1/8,
     alignItems: 'center',
     justifyContent: 'center',

@@ -3,13 +3,13 @@ import { StyleSheet, Image, Text } from 'react-native';
 export default function ImageViewer({PlaceholderImage }) {
     return (
     <div>
-      <Image source={PlaceholderImage} style={styles.image} />
+      <Image source={PlaceholderImage} style={styles.imagestyle} />
     </div>
   );
 }
 
 const styles = StyleSheet.create({
-  image: {
+  imagestyle: {
     width: 320,
     height: 440,
     borderRadius: 18,

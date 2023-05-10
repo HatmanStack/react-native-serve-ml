@@ -1,6 +1,6 @@
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { StyleSheet, View, ScrollView, Text} from 'react-native';
 
 import ImageViewer from './components/ImageViewer';
@@ -10,12 +10,12 @@ import MyInference from './components/Inference';
 import Breathing from './components/breathing';
 import {useFonts } from 'expo-font'; 
 
-const Image = require('./assets/avacado.jpg');
+const assetImage = require('./assets/avacado.jpg');
 
 export default function App() {
   const [prompt, setPrompt] = useState('Avacado Armchair');
   const [fontsLoaded] = useFonts({'Sigmar': require('./assets/Sigmar/Sigmar-Regular.ttf')});
-  const [inferredImage, setInferredImage] = useState(Image);
+  const [inferredImage, setInferredImage] = useState(assetImage);
   const passPrompt = (x) => {setPrompt(x)};
   const passImage = (x) => {setInferredImage(x)};
   
@@ -23,7 +23,7 @@ export default function App() {
       // Main container
       <View style={styles.titlecontainer}>
         <Breathing/>
-        <ScrollView scrollY={true}> 
+        <ScrollView scrollY={true} style={{marginTop:50}}> 
       <View style={styles.container}>
       
         {/* Left column */}

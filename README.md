@@ -1,6 +1,6 @@
 # React Native App with Expo and Docker
 
-This repository contains a React Native application that utilizes Expo as a framework and Docker to serve. The app is meant to be used as a scaffold.  Currently it's serving a simple Mobile Net off the shelf classifier model. Simple baseline components are included to aid with different model types. The current version is targeted for the web.
+This repository contains a React Native application built using Expo as the framework and Docker for deployment. The app is intended to serve as a scaffold for building mobile AI applications. It currently demonstrates a simple CompVis diffusion model. The code includes baseline components to facilitate implementing different model types. The initial version is a web-based app.
 
 ## Preview
 

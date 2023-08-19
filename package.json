@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "App.js",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --port 8080 --web ",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --port 8081 --web "
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
@@ -15,6 +15,7 @@
     "expo": "~48.0.15",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-native": "0.71.7",
     "react-native-web": "^0.19.4"
   },

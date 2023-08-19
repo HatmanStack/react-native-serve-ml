@@ -10,7 +10,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-
+backend/fastapi/
 # macOS
 .DS_Store
 

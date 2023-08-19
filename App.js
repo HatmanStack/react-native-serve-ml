@@ -1,6 +1,6 @@
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import { StyleSheet, View, ScrollView, Text} from 'react-native';
 
 import ImageViewer from './components/ImageViewer';
@@ -18,6 +18,23 @@ export default function App() {
   const [inferredImage, setInferredImage] = useState(assetImage);
   const passPrompt = (x) => {setPrompt(x)};
   const passImage = (x) => {setInferredImage(x)};
+  
+  useEffect(() => {
+    const image = () => fetch("http://localhost:8080/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(prompt)
+  }).then(response => {
+    if (response.ok){
+      return response.json()
+    } throw response;
+  }).then (data => {
+    setInferredImage(data);
+  }).catch(error => {
+    console.error("Error fetching data: ", error);
+  });
+  console.log(image);
+  },[setPrompt]);
   
   return (
       // Main container

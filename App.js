@@ -20,7 +20,7 @@ export default function App() {
   const passImage = (x) => {setInferredImage(x)};
   
   useEffect(() => {
-    const image = () => fetch("http://localhost:8080/", {
+    const image = () => fetch("http://localhost:8082/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(prompt)
@@ -34,7 +34,9 @@ export default function App() {
     console.error("Error fetching data: ", error);
   });
   console.log(image);
-  },[setPrompt]);
+  },[prompt]);
+  
+  
   
   return (
       // Main container

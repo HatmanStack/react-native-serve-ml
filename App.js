@@ -2,11 +2,11 @@ import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect} from 'react';
 import { StyleSheet, View, ScrollView, Text} from 'react-native';
+import axios from "axios";
 
 import ImageViewer from './components/ImageViewer';
 import MySlider from './components/Slider';
 import MyTextInput from './components/TextInput';
-import MyInference from './components/Inference';
 import Breathing from './components/breathing';
 import {useFonts } from 'expo-font'; 
 
@@ -16,24 +16,26 @@ export default function App() {
   const [prompt, setPrompt] = useState('Avacado Armchair');
   const [fontsLoaded] = useFonts({'Sigmar': require('./assets/Sigmar/Sigmar-Regular.ttf')});
   const [inferredImage, setInferredImage] = useState(assetImage);
+  const [steps, setSteps] = useState(50);
   const passPrompt = (x) => {setPrompt(x)};
+  const passSteps = (x) => {setSteps(x)};
   const passImage = (x) => {setInferredImage(x)};
   
+  
   useEffect(() => {
-    const image = () => fetch("http://localhost:8082/", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(prompt)
-  }).then(response => {
-    if (response.ok){
-      return response.json()
-    } throw response;
-  }).then (data => {
-    setInferredImage(data);
-  }).catch(error => {
-    console.error("Error fetching data: ", error);
-  });
-  console.log(image);
+    
+    axios.post("http://localhost:8082/", {
+      prompt: prompt,
+      steps: steps
+    })
+    .then(function (response) {
+      if (prompt != 'Avacado Armchair'){
+        setInferredImage('data:image/png;base64,' + response.data);
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   },[prompt]);
   
   
@@ -51,7 +53,7 @@ export default function App() {
             <MyTextInput onSubmitEditing={passPrompt}/>
           </View>
           <View>
-            <MySlider/>
+            <MySlider passSteps={passSteps}/>
           </View>
         </View>
         {/* Right column */}
@@ -67,7 +69,6 @@ export default function App() {
         </View>
       
     {/* Component for inference */}
-    <MyInference prompt={prompt} PlaceholderImage={passImage}/> 
       </View>
       </ScrollView>
     <StatusBar style="auto" />

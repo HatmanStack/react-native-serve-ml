@@ -1,20 +1,21 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import torch
-from diffusers import StableDiffusionPipeline
+from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
+import base64
 
-model_id = "CompVis/stable-diffusion-v1-4"
-device = "cpu"
+model_id = "runwayml/stable-diffusion-v1-5"
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",
+    "http://localhost:19006",
     "localhost:3001"
 ]
-print("logs")
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -25,16 +26,16 @@ app.add_middleware(
 
 class Item(BaseModel):
     prompt: str
+    steps: int
     
 
 @app.post("/")
 async def inference(item: Item):
-    print(str(item.prompt))
-    pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
-    pipe = pipe.to(device)
-    pipe.enable_attention_slicing()
-    image = pipe(item.prompt).images[0]  
-    print("Success")
+    pipe = StableDiffusionPipeline.from_pretrained(model_id)
+    image = pipe(item.prompt, num_inference_steps=item.steps).images[0]  
     image.save("response.png")
+    with open('response.png', 'rb') as f:
+        base64image = base64.b64encode(f.read())
+    return base64image
     
-    return FileResponse("./response.png", "image/png")
+    

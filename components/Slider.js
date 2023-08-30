@@ -2,19 +2,20 @@
 import * as React from 'react';
 import { StyleSheet, View, Text} from 'react-native';
 import  Slider  from "@react-native-community/slider";
-import MyInference from './Inference';
 import {useFonts } from 'expo-font';
 
-export default function MySlider() {
+export default function MySlider({passSteps}) {
   const [fontsLoaded] = useFonts({'Sigmar': require('../assets/Sigmar/Sigmar-Regular.ttf')});
-  const[csValue, setcsValue] = React.useState(50);
-  const[tempValue, settempValue] = React.useState(.5);
-  const[spValue, setspValue] = React.useState(50);
   const[ssValue, setssValue] = React.useState(50);
+
+  const handleValueChange = (x) =>{
+    setssValue(x);
+    passSteps(x);
+  }
 
   return (     
     <View>
-      <Text style={styles.captionText}>Conditioning Scale</Text>
+      <Text style={styles.captionText}>Sampling Steps</Text>
       <Slider
         style={styles.sliderBase}
         minimumValue={0}
@@ -24,54 +25,10 @@ export default function MySlider() {
         minimumTrackTintColor="#958DA5"
         maximumTrackTintColor="#000000"
         thumbTintColor='#6750A4'
-        onValueChange={v => setcsValue(v)}
-        />
-      <Text style={styles.sliderFont}>{csValue}</Text>
-      
-      <Text style={styles.captionText}>Temperature</Text>
-      <Slider
-        style={styles.sliderBase}
-        minimumValue={0}
-        maximumValue={1}
-        step={.01}
-        value={.5}
-        minimumTrackTintColor="#958DA5"
-        maximumTrackTintColor="#000000"
-        thumbTintColor='#6750A4'
-        onValueChange={v => settempValue(v)}
-        />
-      <Text style={styles.sliderFont}>{tempValue}</Text>
-
-      <Text style={styles.captionText}>Sampling Proportion</Text>
-      <Slider
-        style={styles.sliderBase}
-        minimumValue={0}
-        maximumValue={100}
-        step={1}
-        value={50}
-        minimumTrackTintColor="#958DA5"
-        maximumTrackTintColor="#000000"
-        thumbTintColor='#6750A4'
-        onValueChange={v => setspValue(v)}
-        />
-      <Text style={styles.sliderFont}>{spValue}</Text>
-
-      <Text style={styles.captionText}>Sampling Step</Text>
-      <Slider
-        style={styles.sliderBase}
-        minimumValue={0}
-        maximumValue={100}
-        step={1}
-        value={50}
-        minimumTrackTintColor="#958DA5"
-        maximumTrackTintColor="#000000"
-        thumbTintColor='#6750A4'
-        onValueChange={v => setssValue(v)}
+        onValueChange={handleValueChange}
         />
       <Text style={styles.sliderFont}>{ssValue}</Text>
-
-      <MyInference cs={csValue} temp={tempValue} sp={spValue} ss={ssValue}/>
-    </View > 
+    </View> 
     );
 }
 

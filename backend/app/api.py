@@ -10,7 +10,7 @@ model_id = "runwayml/stable-diffusion-v1-5"
 app = FastAPI()
 
 origins = [
-    "http://localhost:19006"
+    "http://localhost:8080"
 ]
 
 

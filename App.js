@@ -17,25 +17,28 @@ export default function App() {
   const [fontsLoaded] = useFonts({'Sigmar': require('./assets/Sigmar/Sigmar-Regular.ttf')});
   const [inferredImage, setInferredImage] = useState(assetImage);
   const [steps, setSteps] = useState(50);
+  const [guidance, setGuidance] = useState(5);
   const passPrompt = (x) => {setPrompt(x)};
   const passSteps = (x) => {setSteps(x)};
-  const passImage = (x) => {setInferredImage(x)};
+  const passGuidance = (x) => {setGuidance(x)};
   
   
   useEffect(() => {
-    
-    axios.post("http://localhost:8082/", {
+    if (prompt != 'Avacado Armchair'){
+    axios.post("http://localhost:8081/", {
       prompt: prompt,
-      steps: steps
+      steps: steps,
+      guidance: guidance
     })
     .then(function (response) {
-      if (prompt != 'Avacado Armchair'){
+      
         setInferredImage('data:image/png;base64,' + response.data);
-      }
+      
     })
     .catch(function (error) {
       console.log(error);
     });
+  }
   },[prompt]);
   
   
@@ -53,7 +56,7 @@ export default function App() {
             <MyTextInput onSubmitEditing={passPrompt}/>
           </View>
           <View>
-            <MySlider passSteps={passSteps}/>
+            <MySlider passSteps={passSteps} passGuidance={passGuidance}/>
           </View>
         </View>
         {/* Right column */}

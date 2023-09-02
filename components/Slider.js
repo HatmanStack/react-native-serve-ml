@@ -4,13 +4,19 @@ import { StyleSheet, View, Text} from 'react-native';
 import  Slider  from "@react-native-community/slider";
 import {useFonts } from 'expo-font';
 
-export default function MySlider({passSteps}) {
+export default function MySlider({passSteps, passGuidance}) {
   const [fontsLoaded] = useFonts({'Sigmar': require('../assets/Sigmar/Sigmar-Regular.ttf')});
   const[ssValue, setssValue] = React.useState(50);
+  const[sValue, setsValue] = React.useState(5);
 
-  const handleValueChange = (x) =>{
+  const handleStepChange = (x) =>{
     setssValue(x);
     passSteps(x);
+  }
+
+  const handleGuidanceChange = (x) =>{
+    setsValue(x);
+    passGuidance(x);
   }
 
   return (     
@@ -25,9 +31,22 @@ export default function MySlider({passSteps}) {
         minimumTrackTintColor="#958DA5"
         maximumTrackTintColor="#000000"
         thumbTintColor='#6750A4'
-        onValueChange={handleValueChange}
+        onValueChange={handleStepChange}
         />
       <Text style={styles.sliderFont}>{ssValue}</Text>
+      <Text style={styles.captionText}>Guidance</Text>
+      <Slider
+        style={styles.sliderBase}
+        minimumValue={0}
+        maximumValue={10}
+        step={.1}
+        value={5}
+        minimumTrackTintColor="#958DA5"
+        maximumTrackTintColor="#000000"
+        thumbTintColor='#6750A4'
+        onValueChange={handleGuidanceChange}
+        />
+      <Text style={styles.sliderFont}>{sValue}</Text>
     </View> 
     );
 }

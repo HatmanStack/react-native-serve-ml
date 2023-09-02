@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-sundae",
-    "slug": "expo-sundae",
+    "name": "serve-ml",
+    "slug": "serve-ml",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

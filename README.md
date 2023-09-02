@@ -1,4 +1,4 @@
-# React Native App with Expo and Docker
+# React Native App with Expo
 
 This repository contains a React Native application built using Expo as the framework and Docker for deployment. The app is intended to serve as a scaffold for building mobile AI applications. It currently demonstrates a simple runwayml/stable-diffusion-v1-5 diffusion model. The code includes baseline components to facilitate implementing different mL workloads. Expo can build the application for web or mobile with the included backend hostable in a container.
 
@@ -18,11 +18,7 @@ Before running this application locally, ensure that you have the following depe
 
 ### Backend
 
-- FastAPI
 - Pytorch
-- Pydantic
-- uvicorn
-
 
 ## Installation
 
@@ -36,6 +32,8 @@ To install and run the application, follow these steps:
    npm install
    npm web run --port 8080
    ```
+
+App running locally at http://localhost:8080
 
 ### Backend
    

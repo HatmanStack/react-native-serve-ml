@@ -18,7 +18,7 @@ Before running this application locally, ensure that you have the following depe
 
 ### Backend
 
-- Pytorch
+- Pytorch for cpu is installed by default for a cuda install refer to the pytorch [download helper](https://pytorch.org/get-started/locally/)
 
 ## Installation
 
@@ -30,16 +30,29 @@ To install and run the application, follow these steps:
    git clone https://github.com/hatmanstack/react-native-serve-ml.git
    cd react-native-serve-ml
    npm install
-   npm web run --port 8080
+   npm start
    ```
 
-App running locally at http://localhost:8080
+The app is running locally at http://localhost:19006. On Linux, you can replace 'npm start' with 'METRO_PORT=<port> WEB_PORT=<port> npm start' to override the defaults. See [this issue](https://github.com/expo/expo/issues/20629) for more details on modifying the Expo CLI config locally.
+
+For Web builds, use 'npm start -- --port 8080' to start Metro on port 8080, which is useful for building the static content for our app.
 
 ### Backend
    
    ```shell
    cd backend
-   pip install -r requirements
+   python -m venv venv
+
+   WINDOWS
+   cd venv\scripts
+   .\activate
+
+   LINUX | MAC
+   cd venv\bin
+   source activate
+
+   cd ..\..
+   pip install -r requirements.txt
    python main.py
    ```
 

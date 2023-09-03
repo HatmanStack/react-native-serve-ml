@@ -1,19 +1,8 @@
 node_modules/
 .expo/
-dist/
-venv/
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
-backend/fastapi/
-backend-build/
-web-build/
-service.yaml
+backend/venv/
+package-lock.json
+.gitattributes
 
 # macOS
 .DS_Store

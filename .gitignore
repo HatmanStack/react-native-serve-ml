@@ -1,8 +1,8 @@
 node_modules/
 .expo/
 backend/venv/
-package-lock.json
-.gitattributes
+/package-lock.json
+/.gitattributes
 
 # macOS
 .DS_Store

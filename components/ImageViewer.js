@@ -1,15 +1,14 @@
-import { StyleSheet, Image, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet, Image } from 'react-native';
 
-export default function ImageViewer({PlaceholderImage }) {
-    return (
-    <div>
-      <Image source={PlaceholderImage} style={styles.imagestyle} />
-    </div>
+export default function ImageViewer({ PlaceholderImage }) {
+  return (
+    <Image source={PlaceholderImage} style={styles.imageStyle} />
   );
 }
 
 const styles = StyleSheet.create({
-  imagestyle: {
+  imageStyle: {
     width: 320,
     height: 440,
     borderRadius: 18,

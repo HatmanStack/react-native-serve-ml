@@ -10,14 +10,15 @@ import PromptInput from './components/PromptInput';
 import Breathing from './components/breathing';
 import {useFonts } from 'expo-font'; 
 
-const assetImage = require('./assets/avacado.jpg');
+const assetImage = require('./assets/avocado.jpg');
 
 export default function App() {
-  const [inferredImage, setInferredImage] = useState(assetImage);
   const [fontsLoaded] = useFonts({'Sigmar': require('./assets/Sigmar/Sigmar-Regular.ttf')});
-  const [steps, setSteps] = useState(50);
+  const [inferredImage, setInferredImage] = useState(assetImage);
+  const [steps, setSteps] = useState(1);
   const [guidance, setGuidance] = useState(5);
-  const [prompt, setPrompt] = useState('Avacado Armchair');
+  const [prompt, setPrompt] = useState('Avocado Armchair');
+  
   const passPrompt = (x) => {setPrompt(x)};
   const passSteps = (x) => {setSteps(x)};
   const passGuidance = (x) => {setGuidance(x)};
@@ -26,6 +27,7 @@ export default function App() {
   useEffect(() => {
     if (prompt != 'Avacado Armchair'){
     axios.post("http://localhost:8081/", {
+      // Create Body to send to our backend
       prompt: prompt,
       steps: steps,
       guidance: guidance
@@ -60,12 +62,10 @@ export default function App() {
         {/* Right column */}
         <View style={styles.columnContainer}> 
           <View style={styles.columnContainer}> 
-            <ImageViewer PlaceholderImage={inferredImage}/> 
+            <ImageViewer prompt={prompt} PlaceholderImage={inferredImage}/> 
           </View>
           <View style={styles.columnContainer}>    
-            <Text style={{color: '#FFFFFF', fontSize: 18,fontWeight: 'italic',
-                          textAlign: 'center',wordWrap: 'break-word', fontFamily:'Sigmar',
-                          letterSpacing: 2, lineHeight: 30,}}>{prompt}</Text>
+            <Text style={styles.promptText}>{prompt}</Text>
           </View>
         </View>
       
@@ -86,8 +86,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,  
-    padding: 50,
-    
+    padding: 50
   },
   container: {
     flex: 1,
@@ -95,13 +94,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 50,
-    overflow: 'auto',
+    overflow: 'auto'
   },
   columnContainer: {
     flex: 1,
     alignItems: 'center',
     flexDirection: 'column',
   },
+  promptText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'italic',
+    textAlign: 'center',
+    wordWrap: 'break-word',
+    fontFamily: 'Sigmar',
+    letterSpacing: 2,
+    lineHeight: 30
+  }
 });
 
 registerRootComponent(App);

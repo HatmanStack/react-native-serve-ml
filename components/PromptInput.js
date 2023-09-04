@@ -1,23 +1,17 @@
 import React from 'react';
 import {StyleSheet, TextInput, Text} from 'react-native';
-import {useFonts } from 'expo-font';
 
-// Component for custom text input
 export default function PromptInput({ passPrompt }) {
-  // State to track the value of the text input
   const [text, setText] = React.useState('');
-  // Load custom font
-  const [fontsLoaded] = useFonts({ 'Sigmar': require('../assets/Sigmar/Sigmar-Regular.ttf') });
-
+  
   return (
-    // TextInput component
     <TextInput
-      placeholder='Avacado Armchair' // Placeholder text for the input
-      style={styles.input} // Styling for the input
+      placeholder='Avocado Armchair' 
+      style={styles.input} 
       onChangeText={newtext => setText(newtext)} // Function to update the state with the new text value
-      passPrompt={a => passPrompt(text)} // Function to be called when editing is submitted
-      value={text} // Current value of the input
-      maxLength={200} // Maximum length of the input
+      onSubmitEditing={a => passPrompt(text)} // Function to be called when editing is submitted
+      value={text} 
+      maxLength={200} 
     />
   );
 };

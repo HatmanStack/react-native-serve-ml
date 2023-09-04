@@ -1,10 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
-import { useFonts } from 'expo-font';
 
 export default function Breathing() {
-  const [fontsLoaded] = useFonts({ 'Sigmar': require('../assets/Sigmar/Sigmar-Regular.ttf') });
-
   // Create an array of Animated values using useRef
   const animatedValues = useRef([...Array(12)].map(() => new Animated.Value(0))).current;
 
@@ -102,18 +99,18 @@ export default function Breathing() {
 
 const styles = StyleSheet.create({
     containerbreathing: {
-    flex: 1/8,
-    alignItems: 'center',
-    justifyContent: 'center',
+      flex: 1/8,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     heading: {
-    fontWeight: 'bold',
-    fontWeight: '20',
-    color: '#6750A4',
-    fontFamily: 'Sigmar',
-    posistion:'absolute',
-    top:0,
-    left: 0,
+      fontWeight: 'bold',
+      fontWeight: '20',
+      color: '#6750A4',
+      fontFamily: 'Sigmar',
+      posistion:'absolute',
+      top:0,
+      left: 0,
     },
     char: {
       marginHorizontal: 15,

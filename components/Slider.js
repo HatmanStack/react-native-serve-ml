@@ -1,76 +1,77 @@
-
 import * as React from 'react';
-import { StyleSheet, View, Text} from 'react-native';
-import  Slider  from "@react-native-community/slider";
-import {useFonts } from 'expo-font';
+import { StyleSheet, View, Text } from 'react-native';
+import Slider from "@react-native-community/slider";
 
-export default function MySlider({passSteps, passGuidance}) {
-  const [fontsLoaded] = useFonts({'Sigmar': require('../assets/Sigmar/Sigmar-Regular.ttf')});
-  const[ssValue, setssValue] = React.useState(50);
-  const[sValue, setsValue] = React.useState(5);
-
-  const handleStepChange = (x) =>{
-    setssValue(x);
+export default function MySlider({ passSteps, passGuidance }) {
+  const [samplingValue, setSamplingValue] = React.useState(50);
+  const [guidanceValue, setGuidanceValue] = React.useState(5);
+ 
+  // Handle sampling steps change
+  const handleStepChange = (x) => {
+    setSamplingValue(x);
     passSteps(x);
   }
 
-  const handleGuidanceChange = (x) =>{
-    setsValue(x);
+  // Handle guidance change
+  const handleGuidanceChange = (x) => {
+    setGuidanceValue(x);
     passGuidance(x);
   }
 
-  return (     
-    <View>
+  return (
+    <View style={styles.container}>
       <Text style={styles.captionText}>Sampling Steps</Text>
       <Slider
-        style={styles.sliderBase}
+        style={styles.slider}
         minimumValue={0}
         maximumValue={100}
         step={1}
-        value={50}
+        value={samplingValue}
         minimumTrackTintColor="#958DA5"
-        maximumTrackTintColor="#000000"
+        maximumTrackTintColor="#9DA58D"
         thumbTintColor='#6750A4'
         onValueChange={handleStepChange}
-        />
-      <Text style={styles.sliderFont}>{ssValue}</Text>
+      />
+      <Text style={styles.sliderValue}>{samplingValue}</Text>
       <Text style={styles.captionText}>Guidance</Text>
       <Slider
-        style={styles.sliderBase}
+        style={styles.slider}
         minimumValue={0}
         maximumValue={10}
-        step={.1}
-        value={5}
+        step={0.1}
+        value={guidanceValue}
         minimumTrackTintColor="#958DA5"
-        maximumTrackTintColor="#000000"
+        maximumTrackTintColor="#9DA58D"
         thumbTintColor='#6750A4'
         onValueChange={handleGuidanceChange}
-        />
-      <Text style={styles.sliderFont}>{sValue}</Text>
-    </View> 
-    );
+      />
+      <Text style={styles.sliderValue}>{guidanceValue}</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    sliderBase: {
-      width: 400,
-      height: 40,
-    },
-    sliderFont:{
-      fontSize: 18,
-      color: '#FFFFFF',
-      fontWeight: '10',
-      textAlign: 'center',
-      fontFamily: 'Sigmar',
-      letterSpacing: 3,
-    },
-    captionText: {
-      color: '#FFFFFF',
-      fontSize: 20,
-      fontWeight: '10',
-      textAlign: 'center',
-      fontFamily: 'Sigmar',
-      paddingTop: 50,
-      letterSpacing: 3,
-    },
-  });
+  container: {
+    alignItems: 'center',
+    paddingTop: 50,
+  },
+  slider: {
+    width: 400,
+    height: 40,
+  },
+  sliderValue: {
+    fontSize: 18,
+    color: '#FFFFFF',
+    textAlign: 'center',
+    fontFamily: 'Sigmar',
+    letterSpacing: 3,
+    paddingBottom: 30
+  },
+  captionText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    textAlign: 'center',
+    fontFamily: 'Sigmar',
+    letterSpacing: 3,
+  },
+});

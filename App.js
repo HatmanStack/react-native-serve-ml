@@ -13,15 +13,15 @@ import {useFonts } from 'expo-font';
 const assetImage = require('./assets/avocado.jpg');
 
 export default function App() {
-  const [fontsLoaded] = useFonts({'Sigmar': require('./assets/Sigmar/Sigmar-Regular.ttf')});
   const [inferredImage, setInferredImage] = useState(assetImage);
+  const [fontsLoaded] = useFonts({'Sigmar': require('./assets/Sigmar/Sigmar-Regular.ttf')});
   const [steps, setSteps] = useState(1);
   const [guidance, setGuidance] = useState(5);
   const [prompt, setPrompt] = useState('Avocado Armchair');
-  
-  const passPrompt = (x) => {setPrompt(x)};
-  const passSteps = (x) => {setSteps(x)};
-  const passGuidance = (x) => {setGuidance(x)};
+
+  const passPromptWrapper = (x) => {setPrompt(x)};
+  const passStepsWrapper = (x) => {setSteps(x)};
+  const passGuidanceWrapper = (x) => {setGuidance(x)};
   
   
   useEffect(() => {
@@ -53,10 +53,10 @@ export default function App() {
         {/* Left column */}
         <View style={styles.columnContainer}>
           <View>
-            <PromptInput passPrompt={passPrompt}/>
+            <PromptInput passPrompt={passPromptWrapper}/>
           </View>
           <View>
-            <MySlider passSteps={passSteps} passGuidance={passGuidance}/>
+            <MySlider passSteps={passStepsWrapper} passGuidance={passGuidanceWrapper}/>
           </View>
         </View>
         {/* Right column */}

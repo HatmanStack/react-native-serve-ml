@@ -3,7 +3,7 @@ import {StyleSheet, TextInput, Text} from 'react-native';
 import {useFonts } from 'expo-font';
 
 // Component for custom text input
-export default function MyTextInput({ onSubmitEditing }) {
+export default function PromptInput({ passPrompt }) {
   // State to track the value of the text input
   const [text, setText] = React.useState('');
   // Load custom font
@@ -15,7 +15,7 @@ export default function MyTextInput({ onSubmitEditing }) {
       placeholder='Avacado Armchair' // Placeholder text for the input
       style={styles.input} // Styling for the input
       onChangeText={newtext => setText(newtext)} // Function to update the state with the new text value
-      onSubmitEditing={a => onSubmitEditing(text)} // Function to be called when editing is submitted
+      passPrompt={a => passPrompt(text)} // Function to be called when editing is submitted
       value={text} // Current value of the input
       maxLength={200} // Maximum length of the input
     />

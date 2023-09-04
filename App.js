@@ -6,18 +6,18 @@ import axios from "axios";
 
 import ImageViewer from './components/ImageViewer';
 import MySlider from './components/Slider';
-import MyTextInput from './components/TextInput';
+import PromptInput from './components/PromptInput';
 import Breathing from './components/breathing';
 import {useFonts } from 'expo-font'; 
 
 const assetImage = require('./assets/avacado.jpg');
 
 export default function App() {
-  const [prompt, setPrompt] = useState('Avacado Armchair');
-  const [fontsLoaded] = useFonts({'Sigmar': require('./assets/Sigmar/Sigmar-Regular.ttf')});
   const [inferredImage, setInferredImage] = useState(assetImage);
+  const [fontsLoaded] = useFonts({'Sigmar': require('./assets/Sigmar/Sigmar-Regular.ttf')});
   const [steps, setSteps] = useState(50);
   const [guidance, setGuidance] = useState(5);
+  const [prompt, setPrompt] = useState('Avacado Armchair');
   const passPrompt = (x) => {setPrompt(x)};
   const passSteps = (x) => {setSteps(x)};
   const passGuidance = (x) => {setGuidance(x)};
@@ -31,9 +31,7 @@ export default function App() {
       guidance: guidance
     })
     .then(function (response) {
-      
         setInferredImage('data:image/png;base64,' + response.data);
-      
     })
     .catch(function (error) {
       console.log(error);
@@ -53,7 +51,7 @@ export default function App() {
         {/* Left column */}
         <View style={styles.columnContainer}>
           <View>
-            <MyTextInput onSubmitEditing={passPrompt}/>
+            <PromptInput passPrompt={passPrompt}/>
           </View>
           <View>
             <MySlider passSteps={passSteps} passGuidance={passGuidance}/>
@@ -62,7 +60,7 @@ export default function App() {
         {/* Right column */}
         <View style={styles.columnContainer}> 
           <View style={styles.columnContainer}> 
-            <ImageViewer prompt={prompt} PlaceholderImage={inferredImage}/> 
+            <ImageViewer PlaceholderImage={inferredImage}/> 
           </View>
           <View style={styles.columnContainer}>    
             <Text style={{color: '#FFFFFF', fontSize: 18,fontWeight: 'italic',

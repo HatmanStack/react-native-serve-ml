@@ -4,7 +4,7 @@ This repository contains a React Native application built using Expo as the fram
 
 ## Preview
 
-To preview the application, you can visit the hosted version on the Hugging Face Spaces platform at [https://huggingface.co/spaces/Hatman/VQGANS-Hourglass](https://huggingface.co/spaces/Hatman/VQGANS-Hourglass).
+To preview the application frontend, you can visit the hosted version on the Hugging Face Spaces platform [here](https://huggingface.co/spaces/Hatman/react-native-serve-ml).
 
 ## Prerequisites
 

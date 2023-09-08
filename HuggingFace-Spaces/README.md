@@ -15,11 +15,13 @@ This repository contains a React Native application built using Expo as the fram
 
 ## Installation
 
-To generate the static content for this container, replace the App.js file in the react-native-serve-ml folder. 
-'''
+To generate the static content for this container, replace the App.js file in the react-native-serve-ml folder with the App.js file located in this subfolder. 
+
+```shell
 npx expo export:web
-''''
-Builds the static files, which will output to a web-build folder in the main directory. Copy this web-build folder here. You can then delete the existing build folder and rename web-build to build. Once that's done, the app can be packaged as a single container using FastAPI and uvicorn to serve the content.
+```
+
+Builds the static files, which will output to a web-build folder in the main directory. Copy that web-build folder to this directory. You can then delete the existing build folder and rename web-build to build. Once that's done, the app can be packaged as a single container for deployment.
 
 ## License
 

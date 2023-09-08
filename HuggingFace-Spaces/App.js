@@ -26,14 +26,11 @@ export default function App() {
   
   useEffect(() => {
     if (prompt != 'Avocado Armchair'){
-      axios.post("http://localhost:8081/", {
-      // Create Body to send to our backend
-      prompt: prompt,
-      steps: steps,
-      guidance: guidance
-    })
-    .then(function (response) {
-        setInferredImage('data:image/png;base64,' + response.data);
+      fetch(`api?prompt=${prompt}&steps=${steps}&guidance=${guidance}`)
+    .then(response => {
+        return response.json(); 
+    }).then(holder => {
+        setInferredImage('data:image/png;base64,' + holder.output);
     })
     .catch(function (error) {
       console.log(error);

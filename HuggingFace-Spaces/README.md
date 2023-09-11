@@ -23,6 +23,10 @@ npx expo export:web
 
 Builds the static files, which will output to a web-build folder in the main directory. Copy that web-build folder to this directory. You can then delete the existing build folder and rename web-build to build. Once that's done, the app can be packaged as a single container for deployment.
 
+## App.js - Frontend and Backend Communication
+
+The main difference between this App.js and the one included in the root app is that this version uses the fetch method in React for calling the backend API, and handles the response from FastAPI using the FileResponse method.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).

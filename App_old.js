@@ -15,8 +15,8 @@ const assetImage = require('./assets/avocado.jpg');
 export default function App() {
   const [inferredImage, setInferredImage] = useState(assetImage);
   const [fontsLoaded] = useFonts({'Sigmar': require('./assets/Sigmar/Sigmar-Regular.ttf')});
-  const [steps, setSteps] = useState(5);
-  const [guidance, setGuidance] = useState(10);
+  const [steps, setSteps] = useState(1);
+  const [guidance, setGuidance] = useState(5);
   const [prompt, setPrompt] = useState('Avocado Armchair');
 
   const passPromptWrapper = (x) => {setPrompt(x)};

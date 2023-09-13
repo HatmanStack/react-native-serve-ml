@@ -1,10 +1,10 @@
 # React Native App with Expo
 
-This repository contains a React Native application built using Expo as the framework and Docker for deployment. The app is intended to serve as a scaffold for building mobile AI applications. It currently demonstrates a simple runwayml/stable-diffusion-v1-5 diffusion model. The code includes baseline components to facilitate implementing different mL workloads. Expo can build the application for web or mobile with the included backend hostable in a container.
+This repository contains a React Native application built using Expo with FastApi and Docker for deployment on the backend. The app is intended to demonstrate deployment strategies for web and mobile ML applications. It's deployed with diffusion models as a template but can be configured to serve any ML workload.  Expo can build the application for web or mobile as static content with the included backend hostable in a container. An explanation of some of the componenets and deployment architectures: [Cloud Bound](https://medium.com/@HatmanStack/cloud-bound-react-native-and-fastapi-ml-684a658f967a).  For Cloud specific architecture see the included sub-folders.
 
 ## Preview
 
-To preview the application frontend, you can visit the hosted version on the Hugging Face Spaces platform [here](https://huggingface.co/spaces/Hatman/react-native-serve-ml).
+To preview the application visit the hosted version on the Hugging Face Spaces platform [here](https://huggingface.co/spaces/Hatman/react-native-serve-ml).  It uses the huggingface [inference-api](https://huggingface.co/docs/api-inference/index) for inference and is running in a single container. 
 
 ## Prerequisites
 
@@ -33,9 +33,7 @@ To install and run the application, follow these steps:
    npm start
    ```
 
-The app is running locally at http://localhost:19006. On Linux, you can replace 'npm start' with 'METRO_PORT=<port> WEB_PORT=<port> npm start' to override the defaults. See [this issue](https://github.com/expo/expo/issues/20629) for more details on modifying the Expo CLI config locally.
-
-For Web builds, use 'npm start -- --port 8080' to start Metro on port 8080, which is useful for building the static content for our app.
+The app is running locally at http://localhost:19006. For different environments you can switch the port at startup, use 'npm start -- --port 8080' to start Metro(Expo's Compiler) on port 8080.
 
 ### Backend
    

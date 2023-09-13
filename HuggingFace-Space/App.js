@@ -2,7 +2,6 @@ import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect} from 'react';
 import {ActivityIndicator, StyleSheet, View, ScrollView, Text, Pressable} from 'react-native';
-import axios from "axios";
 
 import ImageViewerComponent from './components/ImageViewer';
 import SliderComponent from './components/Slider';
@@ -32,13 +31,7 @@ export default function App() {
   useEffect(() => {
     if (link != `api?prompt=Avocado Armchair&steps=45&guidance=45&modelID=stabilityai/stable-diffusion-2-1`){
       setActivity(true);
-      axios.post("http://localhost:8081/", {
-      // Create Body to send to our backend
-      prompt: prompt,
-      steps: steps,
-      guidance: guidance,
-      modelID: modelID
-      })
+      fetch(link)
     .then(response => {
       console.log(response);
       return response.json(); 

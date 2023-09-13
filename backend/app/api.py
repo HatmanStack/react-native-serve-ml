@@ -6,9 +6,6 @@ from pydantic import BaseModel
 from diffusers import StableDiffusionPipeline
 import base64
 
-# Model from HuggingFace that you are using to run your workload
-model_id = "runwayml/stable-diffusion-v1-5" 
-
 app = FastAPI()
 
 # CORS middleware
@@ -26,19 +23,25 @@ class Item(BaseModel):
     prompt: str
     steps: int
     guidance: float
+    modelID: str
         
 @app.post("/")
 async def inference(item: Item):
+    prompt = item.prompt
+    if "dallinmackay" in modelID:
+        prompt = "lvngvncnt, " + prompt
+    if "nousr" in modelID:
+        prompt = "nousr robot, " + prompt
     # Check for CUDA
     if torch.cuda.is_available():
-        pipe = StableDiffusionPipeline.from_pretrained(model_id,
+        pipe = StableDiffusionPipeline.from_pretrained(item.modelID,
             torch_dtype=torch.float16,
             use_safetensors=True).to("cuda")
         pipe.enable_sequential_cpu_offload()
     else:
-        pipe = StableDiffusionPipeline.from_pretrained(model_id)
+        pipe = StableDiffusionPipeline.from_pretrained(item.modelID)
     
-    image = pipe(item.prompt, 
+    image = pipe(prompt, 
                 num_inference_steps=item.steps, 
                 guidance_scale=item.guidance).images[0]
     

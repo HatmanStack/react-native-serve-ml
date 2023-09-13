@@ -1,15 +1,20 @@
 import React from 'react';
-import {StyleSheet, TextInput, Text} from 'react-native';
+import {StyleSheet, TextInput} from 'react-native';
 
-export default function PromptInput({ passPrompt }) {
+export default function PromptInputComponent({ passPrompt }) {
   const [text, setText] = React.useState('');
+
+  const handleTextChange = (x) => {
+    setText(x);
+    passPrompt(x);
+  }
   
   return (
-    <TextInput
+      <TextInput
       placeholder='Avocado Armchair' 
       style={styles.input} 
-      onChangeText={newtext => setText(newtext)} // Function to update the state with the new text value
-      onSubmitEditing={a => passPrompt(text)} // Function to be called when editing is submitted
+      multiline
+      onChangeText={newtext => handleTextChange(newtext)} // Function to update the state with the new text value
       value={text} 
       maxLength={200} 
     />
@@ -26,7 +31,7 @@ const styles = StyleSheet.create({
     borderStartWidth: 10,
     borderEndWidth: 10,
     borderRadius: 6,
-    height: 40,
+    height: 80,
     width: 600,
     paddingLeft: 10,
     paddingRight: 10,

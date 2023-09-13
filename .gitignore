@@ -1,8 +1,10 @@
 node_modules/
 .expo/
 backend/venv/
+backend/app/__pycache__/
 /package-lock.json
 /.gitattributes
+web-build/
 
 # macOS
 .DS_Store

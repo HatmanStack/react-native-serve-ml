@@ -2,9 +2,9 @@ import * as React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import Slider from "@react-native-community/slider";
 
-export default function MySlider({ passSteps, passGuidance }) {
-  const [samplingValue, setSamplingValue] = React.useState(5);
-  const [guidanceValue, setGuidanceValue] = React.useState(10);
+export default function SliderComponent({ passSteps, passGuidance }) {
+  const [samplingValue, setSamplingValue] = React.useState(45);
+  const [guidanceValue, setGuidanceValue] = React.useState(50);
  
   // Handle sampling steps change
   const handleStepChange = (x) => {
@@ -24,7 +24,7 @@ export default function MySlider({ passSteps, passGuidance }) {
       <Slider
         style={styles.slider}
         minimumValue={3}
-        maximumValue={10}
+        maximumValue={50}
         step={1}
         value={samplingValue}
         minimumTrackTintColor="#958DA5"

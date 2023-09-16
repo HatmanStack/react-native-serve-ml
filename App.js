@@ -38,7 +38,7 @@ export default function App() {
       steps: steps,
       guidance: guidance,
       modelID: modelID
-    },{'cors':'no-cors'})
+    })
     .then(response => {
       setActivity(false);
       setReturnedPrompt(prompt);

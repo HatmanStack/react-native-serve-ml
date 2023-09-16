@@ -1,24 +1,29 @@
 import torch
 import fastapi
 import base64
-from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from diffusers import StableDiffusionPipeline
 
-app = FastAPI()
+origins = ["http://127.0.0.1:19006",
+"http://127.0.0.1:19006/api",
+"http://localhost:19006",
+"http://localhost:19006/api"]
 
-# CORS middleware
-origins = ["http://127.0.0.1:19006"]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+middleware = [
+    Middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=['*'],
+        allow_headers=['*']
+    )
+]
 
-# Pydantic BaseModel to catch the body of our Request
+app = FastAPI(middleware=middleware)
+
 class Item(BaseModel):
     prompt: str
     steps: int

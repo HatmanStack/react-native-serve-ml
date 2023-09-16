@@ -14,7 +14,6 @@ Before running this application locally, ensure that you have the following depe
 
 - Node
 - npm (Node Package Manager)
-- Expo
 
 ### Backend
 
@@ -29,7 +28,8 @@ To install and run the application, follow these steps:
    ```shell
    git clone https://github.com/hatmanstack/react-native-serve-ml.git
    cd react-native-serve-ml
-   npm install
+   npm install -g yarn
+   yarn
    npm start
    ```
 

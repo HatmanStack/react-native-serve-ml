@@ -2,7 +2,7 @@ import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect} from 'react';
 import {ActivityIndicator, StyleSheet, View, ScrollView, Text, Pressable} from 'react-native';
-import axios from "axios";
+import axios from 'axios';
 
 import ImageViewerComponent from './components/ImageViewer';
 import SliderComponent from './components/Slider';
@@ -20,7 +20,7 @@ export default function App() {
   const [guidance, setGuidance] = useState(45);
   const [modelID, setModelID] = useState('stabilityai/stable-diffusion-2-1')
   const [prompt, setPrompt] = useState('Avocado Armchair');
-  const [link, setLink] = useState(`api?prompt=${prompt}&steps=${steps}&guidance=${guidance}&modelID=${modelID}`)
+  const [parameters, setParameters] = useState('')
   const [activity, setActivity] = useState(false);
   const [returnedPrompt, setReturnedPrompt] = useState('Avocado Armchair');
 
@@ -30,28 +30,25 @@ export default function App() {
   const passModelIDWrapper = (x) => {setModelID(x)};
   
   useEffect(() => {
-    if (link != `api?prompt=Avocado Armchair&steps=45&guidance=45&modelID=stabilityai/stable-diffusion-2-1`){
+    if (parameters != ''){
       setActivity(true);
-      axios.post("http://localhost:8081/", {
+      axios.post("http://127.0.0.1:8081/api", {
       // Create Body to send to our backend
       prompt: prompt,
       steps: steps,
       guidance: guidance,
       modelID: modelID
-      })
+    },{'cors':'no-cors'})
     .then(response => {
-      console.log(response);
-      return response.json(); 
-    }).then(holder => {
       setActivity(false);
       setReturnedPrompt(prompt);
-      setInferredImage('data:image/png;base64,' + holder.output);
+      setInferredImage('data:image/png;base64,' + response.data.output);
     })
     .catch(function (error) {
       console.log(error);
     });
   }
-  },[link]);
+  },[parameters]);
 
   return (
       // Main container
@@ -70,7 +67,7 @@ export default function App() {
             {activity ? 
               <ActivityIndicator size="large" color="#B58392" style={styles.activityIndicator}/> :
               <Pressable
-                onPress={() => {setLink(`api?prompt=${prompt}&steps=${steps}&guidance=${guidance}&modelID=${modelID}`)}}
+                onPress={() => {setParameters(`${prompt}-${steps}-${guidance}-${modelID}`)}}
                 style={({pressed}) => [{backgroundColor: pressed ? '#9DA58D' : '#958DA5',},styles.button]}>
                 {({pressed}) => (<Text style={styles.promptText}>{pressed ? 'INFERRED!' : 'Inference'}</Text>)}
               </Pressable>

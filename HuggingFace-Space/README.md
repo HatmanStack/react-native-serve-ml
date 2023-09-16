@@ -15,13 +15,15 @@ This repository contains a static React Native application built using Expo with
 
 ## Installation
 
-To generate the static content for this container, replace the App.js file in the react-native-serve-ml folder with the App.js file located in this subfolder. 
+To generate the static content for this container clone have a working Node/npm installation then clone this [github repo](https://github.com/HatmanStack/react-native-serve-ml).  In `App.js` change the `axios.post` call to `"/api"`.
 
 ```shell
+npm install -g yarn
+yarn
 npx expo export:web
 ```
 
-Builds the static files, which will output to a web-build folder in the main directory. Copy that web-build folder to this directory. You can then delete the existing build folder and rename web-build to build. Once that's done, the app can be packaged as a single container for deployment. This version uses the fetch method in React for calling the backend API.
+Static files are output to the web-build folder in the root directory. Replace the web-build folder in the Huggingface-Space directory with the web-build folder in the root directory. Once that's done, the static content of the app will be updated the Huggingface-Space directory can be deployed as a container.
 
 ## License
 

@@ -4,27 +4,30 @@ from fastapi.responses import FileResponse
 import json
 import requests
 import base64
+from pydantic import BaseModel
 from PIL import Image
 from io import BytesIO
 
 app = FastAPI()
 
+class Item(BaseModel):
+    prompt: str
+    steps: int
+    guidance: float
+    modelID: str
 
-@app.get("/api")
-async def inference(prompt, steps, guidance, modelID):
-    if "dallinmackay" in modelID:
-        prompt = "lvngvncnt, " + prompt
-    if "nousr" in modelID:
-        prompt = "nousr robot, " + prompt
+@app.post("/api")
+async def inference(item: Item):
+    if "dallinmackay" in item.modelID:
+        prompt = "lvngvncnt, " + item.prompt
+    if "nousr" in item.modelID:
+        prompt = "nousr robot, " + item.prompt
     data = {"inputs":prompt, "options":{"wait_for_model": True, "use_cache": False}}
-    API_URL = "https://api-inference.huggingface.co/models/" + modelID
-    print(API_URL)
-    print(data)
+    API_URL = "https://api-inference.huggingface.co/models/" + item.modelID
 
     headers = {"Authorization": f"Bearer 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"}
     api_data = json.dumps(data)
     response = requests.request("POST", API_URL, headers=headers, data=api_data)
-    print(response)
 
     image_stream = BytesIO(response.content)
     image = Image.open(image_stream)
@@ -34,7 +37,7 @@ async def inference(prompt, steps, guidance, modelID):
     
     return {"output": base64image}
 
-app.mount("/", StaticFiles(directory="build", html=True), name="build")
+app.mount("/", StaticFiles(directory="web-build", html=True), name="build")
 
 @app.get('/')
 def homepage() -> FileResponse:

@@ -1,11 +1,14 @@
 node_modules/
 .expo/
-backend/venv/
-backend/app/__pycache__/
-/package-lock.json
-/.gitattributes
-web-build/
-backend/test/
+dist/
+venv/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
 
 
 # macOS

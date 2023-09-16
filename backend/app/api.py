@@ -1,15 +1,15 @@
 import torch
 import fastapi
+import base64
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from diffusers import StableDiffusionPipeline
-import base64
 
 app = FastAPI()
 
 # CORS middleware
-origins = ["http://localhost:19006"]
+origins = ["http://127.0.0.1:19006"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -24,14 +24,14 @@ class Item(BaseModel):
     steps: int
     guidance: float
     modelID: str
-        
-@app.post("/")
+
+@app.post("/api")
 async def inference(item: Item):
-    prompt = item.prompt
-    if "dallinmackay" in modelID:
-        prompt = "lvngvncnt, " + prompt
-    if "nousr" in modelID:
-        prompt = "nousr robot, " + prompt
+    if "dallinmackay" in item.modelID:
+        prompt = "lvngvncnt, " + item.prompt
+    if "nousr" in item.modelID:
+        prompt = "nousr robot, " + item.prompt
+    
     # Check for CUDA
     if torch.cuda.is_available():
         pipe = StableDiffusionPipeline.from_pretrained(item.modelID,
@@ -49,5 +49,7 @@ async def inference(item: Item):
     image.save("response.png")
     with open('response.png', 'rb') as f:
         base64image = base64.b64encode(f.read())
-        
-    return base64image
+    
+    return {"output": base64image}
+
+

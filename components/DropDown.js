@@ -3,9 +3,11 @@ import { StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
 const data = [
-  { label: 'Stable Diffusion 1.5', value: 'runwayml/stable-diffusion-v1-5' },
+  { label: 'Open Journey', value: 'prompthero/openjourney' },
+  { label: 'Photo', value: 'dreamlike-art/dreamlike-photoreal-2.0' },
+  { label: 'Arcane', value: 'nitrosocke/Arcane-Diffusion' },
   { label: 'Van-Gogh', value: 'dallinmackay/Van-Gogh-diffusion' },
-  { label: 'Robots', value: 'nousr/robo-diffusion' } 
+  { label: 'Robots', value: 'nousr/robo-diffusion' }
 ];
 
 export default function DropDownComponent({passModelID}){

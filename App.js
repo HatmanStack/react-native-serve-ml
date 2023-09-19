@@ -1,7 +1,7 @@
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect} from 'react';
-import {ActivityIndicator, StyleSheet, View, ScrollView, Text, Pressable} from 'react-native';
+import {ActivityIndicator, StyleSheet, View, ScrollView, Text, Pressable, useWindowDimensions} from 'react-native';
 import axios from 'axios';
 
 import ImageViewerComponent from './components/ImageViewer';
@@ -18,11 +18,12 @@ export default function App() {
   const [inferredImage, setInferredImage] = useState(assetImage);
   const [steps, setSteps] = useState(45);
   const [guidance, setGuidance] = useState(45);
-  const [modelID, setModelID] = useState('stabilityai/stable-diffusion-2-1')
+  const [modelID, setModelID] = useState('prompthero/openjourney')
   const [prompt, setPrompt] = useState('Avocado Armchair');
   const [parameters, setParameters] = useState('')
   const [activity, setActivity] = useState(false);
   const [returnedPrompt, setReturnedPrompt] = useState('Avocado Armchair');
+  const {width} = useWindowDimensions();
 
   const passPromptWrapper = (x) => {setPrompt(x)};
   const passStepsWrapper = (x) => {setSteps(x)};
@@ -32,7 +33,7 @@ export default function App() {
   useEffect(() => {
     if (parameters != ''){
       setActivity(true);
-      axios.post("http://127.0.0.1:8081/api", {
+      axios.post("/api", {
       // Create Body to send to our backend
       prompt: prompt,
       steps: steps,
@@ -40,6 +41,7 @@ export default function App() {
       modelID: modelID
     })
     .then(response => {
+      console.log(response);
       setActivity(false);
       setReturnedPrompt(prompt);
       setInferredImage('data:image/png;base64,' + response.data.output);
@@ -53,50 +55,66 @@ export default function App() {
   return (
       // Main container
       <View style={styles.titlecontainer}>
-        <BreathingComponent/>
-        <ScrollView scrollY={true} style={{marginTop:50}}> 
-      <View style={styles.rowContainer}>
-      
-        {/* Left column */}
-        <View style={styles.columnContainer}>
-          <View>
-            <PromptInputComponent passPrompt={passPromptWrapper}/>
-          </View>
-          <View style={styles.rowContainer}>
-            <DropDownComponent passModelID={passModelIDWrapper}/>
-            {activity ? 
-              <ActivityIndicator size="large" color="#B58392" style={styles.activityIndicator}/> :
-              <Pressable
-                onPress={() => {setParameters(`${prompt}-${steps}-${guidance}-${modelID}`)}}
-                style={({pressed}) => [{backgroundColor: pressed ? '#9DA58D' : '#958DA5',},styles.button]}>
-                {({pressed}) => (<Text style={styles.promptText}>{pressed ? 'INFERRED!' : 'Inference'}</Text>)}
-              </Pressable>
-            }
-          </View>
-          <View>
-            <SliderComponent passSteps={passStepsWrapper} passGuidance={passGuidanceWrapper} />
-          </View>
-        </View>
-        {/* Right column */}
-        <View style={styles.columnContainer}> 
-          <View style={styles.columnContainer}> 
-            <ImageViewerComponent prompt={prompt} PlaceholderImage={inferredImage}/> 
-          </View>
-          <View style={styles.columnContainer}>    
-            <Text style={styles.promptText}>{returnedPrompt}</Text>
-          </View>
-        </View>
-      
-    {/* Component for inference */}
-      </View>
-      </ScrollView>
-    <StatusBar style="auto" />
+        <BreathingComponent /> 
+        <ScrollView scrollY={true} style={styles.ScrollView}> 
+          {width > 1000 ? (<View style={styles.rowContainer}>
+              {/* Left column */}
+              <View style={styles.columnContainer}>
+                  <View>
+                    <PromptInputComponent passPrompt={passPromptWrapper} />
+                  </View>
+                  <View style={styles.rowContainer}>
+                    <DropDownComponent passModelID={passModelIDWrapper} />
+                    {activity ?
+                      <ActivityIndicator size="large" color="#B58392" style={styles.activityIndicator} /> :
+                      <Pressable
+                        onPress={() => { setParameters(`${prompt}-${steps}-${guidance}-${modelID}`); } }
+                        style={({ pressed }) => [{ backgroundColor: pressed ? '#9DA58D' : '#958DA5', }, styles.button]}>
+                        {({ pressed }) => (<Text style={styles.promptText}>{pressed ? 'INFERRED!' : 'Inference'}</Text>)}
+                      </Pressable>}
+                  </View>
+                  <View>
+                    <SliderComponent passSteps={passStepsWrapper} passGuidance={passGuidanceWrapper} />
+                  </View>
+                </View>
+                {/* Right column */}
+                <View style={styles.columnContainer}>
+                  <View style={styles.columnContainer}>
+                    <ImageViewerComponent PlaceholderImage={inferredImage} />
+                    <Text style={styles.promptText}>{returnedPrompt}</Text>
+                  </View>
+                </View>
+             
+          </View>) : 
+          (<View style={styles.columnContainer}>
+            <PromptInputComponent passPrompt={passPromptWrapper} />
+                <DropDownComponent passModelID={passModelIDWrapper} />
+                {activity ?
+                  <ActivityIndicator size="large" color="#B58392"/> :
+                  <Pressable
+                    onPress={() => { setParameters(`${prompt}-${steps}-${guidance}-${modelID}`); } }
+                    style={({ pressed }) => [{ backgroundColor: pressed ? '#9DA58D' : '#958DA5', }, styles.button]}>
+                    {({ pressed }) => (<Text style={styles.promptText}>{pressed ? 'INFERRED!' : 'Inference'}</Text>)}
+                  </Pressable>}
+                <SliderComponent passSteps={passStepsWrapper} passGuidance={passGuidanceWrapper} />   
+                <ImageViewerComponent PlaceholderImage={inferredImage} />
+                <Text style={styles.promptText}>{returnedPrompt}</Text>
+            </View>)}
+        </ScrollView><StatusBar style="auto" />
     </View>
-    
   );
 }
 
 const styles = StyleSheet.create({
+  canvascontainer: {
+    backgroundColor: '#25292e',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,  
+    padding: 50
+  },
   titlecontainer: {
     backgroundColor: '#25292e',
     position: 'fixed',
@@ -124,8 +142,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Sigmar',
     paddingHorizontal: 32,
     borderRadius: 4,
-    elevation: 3,
-    marginLeft: 50
+    elevation: 3
   },
   activityIndicator:{
     marginLeft: 50
@@ -139,6 +156,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Sigmar',
     letterSpacing: 2,
     lineHeight: 30
+  },
+  ScrollView: {
+    backgroundColor: '#25292e',
+    marginTop: 50,
+    padding: 5
   }
 });
 

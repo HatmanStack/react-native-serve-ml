@@ -18,10 +18,17 @@ class Item(BaseModel):
 
 @app.post("/api")
 async def inference(item: Item):
+    print("check")
     if "dallinmackay" in item.modelID:
         prompt = "lvngvncnt, " + item.prompt
     if "nousr" in item.modelID:
         prompt = "nousr robot, " + item.prompt
+    if "nitrosocke" in item.modelID:
+        prompt = "arcane, " + item.prompt
+    if "dreamlike" in item.modelID:
+        prompt = "photo, " + item.prompt
+    if "prompthero" in item.modelID:
+        prompt = "mdjrny-v4 style, " + item.prompt
     data = {"inputs":prompt, "options":{"wait_for_model": True, "use_cache": False}}
     API_URL = "https://api-inference.huggingface.co/models/" + item.modelID
 

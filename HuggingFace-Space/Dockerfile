@@ -1,5 +1,5 @@
 # Use the official lightweight Python image.
-FROM python:3.10
+FROM python:3.10-slim
 
 # Copy local code to the container image.
 WORKDIR /app

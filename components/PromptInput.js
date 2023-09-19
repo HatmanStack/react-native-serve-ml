@@ -1,24 +1,29 @@
 import React from 'react';
-import {StyleSheet, TextInput} from 'react-native';
+import { StyleSheet, TextInput, useWindowDimensions } from 'react-native';
 
 export default function PromptInputComponent({ passPrompt }) {
   const [text, setText] = React.useState('');
-
+  const {width} = useWindowDimensions();
+  
+  const textInputStyle = { 
+    ...styles.input, width: width > 500 ? 500 : width - 80};
+ 
   const handleTextChange = (x) => {
     setText(x);
     passPrompt(x);
   }
-  
+
   return (
-      <TextInput
-      placeholder='Avocado Armchair' 
-      style={styles.input} 
+    <TextInput 
+      style={textInputStyle}
+      placeholder='Avocado Armchair'
       multiline
-      onChangeText={newtext => handleTextChange(newtext)} // Function to update the state with the new text value
-      value={text} 
+      onChangeText={handleTextChange} 
+      value={text}
       maxLength={200} 
     />
   );
+
 };
 
 const styles = StyleSheet.create({
@@ -32,7 +37,6 @@ const styles = StyleSheet.create({
     borderEndWidth: 10,
     borderRadius: 6,
     height: 80,
-    width: 600,
     paddingLeft: 10,
     paddingRight: 10,
     fontSize: 20,

@@ -4,6 +4,7 @@ emoji: 🔥
 colorFrom: red
 colorTo: blue
 sdk: docker
+port: 8000
 pinned: false
 license: mit
 ---
@@ -23,11 +24,11 @@ yarn
 npx expo export:web
 ```
 
-Static files are output to the web-build folder in the root directory. Replace the web-build folder in the Huggingface-Space directory with the web-build folder in the root directory. Once that's done, the static content of the app will be updated the Huggingface-Space directory can be deployed as a container.
+Static files are output to the web-build folder in the root directory. Replace the web-build folder in the Huggingface-Space directory with the web-build folder in the root directory. Once that's done, the static content of the app will be updated the Huggingface-Space directory can be deployed as a container.<b>In a single container to reach the endpoint from the axios call use "/api" not "http://localhost:8081/api".</b>
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE)
 
 ## Acknowledgments
 

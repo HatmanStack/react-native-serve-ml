@@ -36,7 +36,7 @@ export default function App() {
   useEffect(() => {
     if (parameters != ''){
       setActivity(true);
-      axios.post("http://127.0.0.1:8081/api", {
+      axios.post("http://localhost:8081/api", {
       // Create Body to send to our backend
       prompt: prompt,
       steps: steps,

@@ -6,7 +6,8 @@ backend/app/__pycache__/
 /.gitattributes
 web-build/
 backend/test/
-
+Google-Cloud-Platform-Sidecar/
+yarn.lock
 
 # macOS
 .DS_Store

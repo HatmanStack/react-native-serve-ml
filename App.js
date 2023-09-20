@@ -22,18 +22,21 @@ export default function App() {
   const [prompt, setPrompt] = useState('Avocado Armchair');
   const [parameters, setParameters] = useState('')
   const [activity, setActivity] = useState(false);
+  const [modelError, setModelError] = useState(false);
   const [returnedPrompt, setReturnedPrompt] = useState('Avocado Armchair');
   const {width} = useWindowDimensions();
 
   const passPromptWrapper = (x) => {setPrompt(x)};
   const passStepsWrapper = (x) => {setSteps(x)};
   const passGuidanceWrapper = (x) => {setGuidance(x)};
-  const passModelIDWrapper = (x) => {setModelID(x)};
+  const passModelIDWrapper = (x) => {
+      setModelError(false);
+      setModelID(x)};
   
   useEffect(() => {
     if (parameters != ''){
       setActivity(true);
-      axios.post("/api", {
+      axios.post("http://127.0.0.1:8081/api", {
       // Create Body to send to our backend
       prompt: prompt,
       steps: steps,
@@ -47,6 +50,8 @@ export default function App() {
       setInferredImage('data:image/png;base64,' + response.data.output);
     })
     .catch(function (error) {
+      setActivity(false);
+      setModelError(true);
       console.log(error);
     });
   }
@@ -65,14 +70,17 @@ export default function App() {
                   </View>
                   <View style={styles.rowContainer}>
                     <DropDownComponent passModelID={passModelIDWrapper} />
-                    {activity ?
-                      <ActivityIndicator size="large" color="#B58392" style={styles.activityIndicator} /> :
-                      <Pressable
-                        onPress={() => { setParameters(`${prompt}-${steps}-${guidance}-${modelID}`); } }
-                        style={({ pressed }) => [{ backgroundColor: pressed ? '#9DA58D' : '#958DA5', }, styles.button]}>
-                        {({ pressed }) => (<Text style={styles.promptText}>{pressed ? 'INFERRED!' : 'Inference'}</Text>)}
-                      </Pressable>}
-                  </View>
+                      <View style={styles.columnContainer}>
+                      {activity ?
+                        <ActivityIndicator size="large" color="#B58392" style={styles.activityIndicator} /> :
+                        <Pressable
+                          onPress={() => { setParameters(`${prompt}-${steps}-${guidance}-${modelID}`); } }
+                          style={({ pressed }) => [{ backgroundColor: pressed ? '#9DA58D' : '#958DA5', }, styles.button]}>
+                          {({ pressed }) => (<Text style={styles.promptText}>{pressed ? 'INFERRED!' : 'Inference'}</Text>)}
+                        </Pressable>}
+                      {modelError ? <Text style={styles.promptText}>Model Error!</Text>:<></>}
+                      </View>
+                    </View>
                   <View>
                     <SliderComponent passSteps={passStepsWrapper} passGuidance={passGuidanceWrapper} />
                   </View>
@@ -96,6 +104,7 @@ export default function App() {
                     style={({ pressed }) => [{ backgroundColor: pressed ? '#9DA58D' : '#958DA5', }, styles.button]}>
                     {({ pressed }) => (<Text style={styles.promptText}>{pressed ? 'INFERRED!' : 'Inference'}</Text>)}
                   </Pressable>}
+                  {modelError ? <Text style={styles.promptText}>Model Error!</Text>:<></>}
                 <SliderComponent passSteps={passStepsWrapper} passGuidance={passGuidanceWrapper} />   
                 <ImageViewerComponent PlaceholderImage={inferredImage} />
                 <Text style={styles.promptText}>{returnedPrompt}</Text>

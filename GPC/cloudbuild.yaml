@@ -1,0 +1,23 @@
+steps:
+  # Our Google Cloud Bucket containing our Cached Models
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [ 'storage', 'cp', '-R', 'gs://react-native-serve-ml/cache', '.' ]
+  
+  # Our Previously Built Image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/react-native-serve-ml/myimage', '.' ]
+  
+  # Push the Docker image to Google Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/react-native-serve-ml/myimage']
+  
+  # Deploy the application using Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'react-native-serve-ml-backend', '--image', 
+           'us-central1-docker.pkg.dev/$PROJECT_ID/react-native-serve-ml/myimage',
+           '--region', 'us-central1', '--platform', 'managed',
+           '--allow-unauthenticated']   
+
+# Specify the Docker image to be used in subsequent steps or deployment
+images:
+  - us-central1-docker.pkg.dev/$PROJECT_ID/react-native-serve-ml/myimage

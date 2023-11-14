@@ -8,6 +8,8 @@ web-build/
 backend/test/
 Google-Cloud-Platform-Sidecar/
 yarn.lock
+vevn/
+backend/app/__pycache__
 
 # macOS
 .DS_Store

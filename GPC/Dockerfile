@@ -14,9 +14,10 @@ RUN useradd -m -u 1000 user
 # Switch to the "user" user
 USER user
 
-# Set home to the user's home directory
+# Set home to the user's home directory and HUGGINGFACE_HUB_CACHE to our Storage Bucket
 ENV HOME=/home/user \
-	PATH=/home/user/.local/bin:$PATH
+ PATH=/home/user/.local/bin:$PATH \
+ HUGGINGFACE_HUB_CACHE=./cache
 
 # Set the working directory to the user's home directory
 WORKDIR $HOME/app

@@ -100,18 +100,18 @@ export default function Breathing() {
 
 const styles = StyleSheet.create({
     containerbreathing: {
-      flex: 1/8,
+      flex: 1,
+      flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
     },
     heading: {
       fontWeight: 'bold',
-      fontWeight: '20',
+      fontWeight: 20,
+      paddingTop: 25,
       color: '#6750A4',
       fontFamily: 'Sigmar',
-      posistion:'absolute',
-      top:0,
-      left: 0,
+      position:'absolute', 
     },
     char: {
       marginHorizontal: 15,

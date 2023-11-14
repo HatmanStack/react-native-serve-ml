@@ -14,8 +14,8 @@ export default function SliderComponent({ passSteps, passGuidance }) {
 
   // Handle guidance change
   const handleGuidanceChange = (x) => {
-    setGuidanceValue(x);
-    passGuidance(x);
+    setGuidanceValue(parseFloat(x.toFixed(2)));
+    passGuidance(parseFloat(x.toFixed(2)));
   }
 
   return (
@@ -37,7 +37,7 @@ export default function SliderComponent({ passSteps, passGuidance }) {
       <Slider
         style={styles.slider}
         minimumValue={0}
-        maximumValue={100}
+        maximumValue={10}
         step={0.1}
         value={guidanceValue}
         minimumTrackTintColor="#958DA5"

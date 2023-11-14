@@ -36,7 +36,7 @@ export default function App() {
   useEffect(() => {
     if (parameters != ''){
       setActivity(true);
-      axios.post("http://localhost:8081/api", {
+      axios.post("https://gpc-ervjof6qfq-uc.a.run.app/api", {
       // Create Body to send to our backend
       prompt: prompt,
       steps: steps,
@@ -61,7 +61,7 @@ export default function App() {
       // Main container
       <View style={styles.titlecontainer}>
         <BreathingComponent /> 
-        <ScrollView scrollY={true} style={styles.ScrollView}> 
+        <ScrollView scrollY={true} style={styles.ScrollView} showsVerticalScrollIndicator={false}> 
           {width > 1000 ? (<View style={styles.rowContainer}>
               {/* Left column */}
               <View style={styles.columnContainer}>
@@ -117,7 +117,7 @@ export default function App() {
 const styles = StyleSheet.create({
   canvascontainer: {
     backgroundColor: '#25292e',
-    position: 'fixed',
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
   },
   titlecontainer: {
     backgroundColor: '#25292e',
-    position: 'fixed',
+    position: 'absolute',
+    
     top: 0,
     left: 0,
     right: 0,

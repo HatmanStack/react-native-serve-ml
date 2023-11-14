@@ -18,6 +18,7 @@ export default function PromptInputComponent({ passPrompt }) {
       style={textInputStyle}
       placeholder='Avocado Armchair'
       multiline
+      textAlign='center'
       onChangeText={handleTextChange} 
       value={text}
       maxLength={200} 

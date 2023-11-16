@@ -2,9 +2,21 @@ import torch
 import base64
 from PIL import Image
 from io import BytesIO
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from diffusers import StableDiffusionPipeline
+
+middleware = [
+    Middleware(
+        CORSMiddleware,
+        allow_origins=['*'],
+        allow_credentials=True,
+        allow_methods=['*'],
+        allow_headers=['*']
+    )
+]
 
 app = FastAPI(middleware=middleware)
 

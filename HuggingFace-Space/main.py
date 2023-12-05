@@ -4,11 +4,15 @@ from fastapi.responses import FileResponse
 import json
 import requests
 import base64
+import os
 from pydantic import BaseModel
 from PIL import Image
 from io import BytesIO
 
+
 app = FastAPI()
+
+token = os.environ.get("HF_TOKEN")
 
 class Item(BaseModel):
     prompt: str
@@ -32,7 +36,7 @@ async def inference(item: Item):
     data = {"inputs":prompt, "options":{"wait_for_model": True, "use_cache": False}}
     API_URL = "https://api-inference.huggingface.co/models/" + item.modelID
 
-    headers = {"Authorization": f"Bearer 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"}
+    headers = {"Authorization": f"Bearer " + token}
     api_data = json.dumps(data)
     response = requests.request("POST", API_URL, headers=headers, data=api_data)
 

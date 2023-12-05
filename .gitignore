@@ -10,6 +10,7 @@ Google-Cloud-Platform-Sidecar/
 yarn.lock
 vevn/
 backend/app/__pycache__
+GCP/cache
 
 # macOS
 .DS_Store

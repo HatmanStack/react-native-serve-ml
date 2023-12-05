@@ -1,17 +1,21 @@
 import torch
 import base64
+import os
 from PIL import Image
 from io import BytesIO
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from fastapi import Request
 from diffusers import StableDiffusionPipeline
+
+origins = ["*"]
 
 middleware = [
     Middleware(
         CORSMiddleware,
-        allow_origins=['*'],
+        allow_origins=origins,
         allow_credentials=True,
         allow_methods=['*'],
         allow_headers=['*']
@@ -27,7 +31,9 @@ class Item(BaseModel):
     modelID: str
 
 @app.post("/api")
-async def inference(item: Item):
+async def inference(item: Item, request: Request):
+    print(dict(request.headers))
+    
     if "dallinmackay" in item.modelID:
         prompt = "lvngvncnt, " + item.prompt
     if "nousr" in item.modelID:
@@ -54,5 +60,6 @@ async def inference(item: Item):
         base64image = base64.b64encode(f.read())
     
     return {"output": base64image}
-
+    
+    
 

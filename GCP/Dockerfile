@@ -16,13 +16,8 @@ USER user
 
 # Set home to the user's home directory and HUGGINGFACE_HUB_CACHE to our Storage Bucket
 ENV HOME=/home/user \
- PATH=/home/user/.local/bin:$PATH 
-
-# Create Dir for Hugging Face Models
-RUN mkdir ~/.cache
-
-# Add contents of Cloud Storage bucket
-COPY /tmp/cache /app/ ~/.cache
+ PATH=/home/user/.local/bin:$PATH \
+ TRANSFORMERS_CACHE=./cache/
 
 # Set the working directory to the user's home directory
 WORKDIR $HOME/app

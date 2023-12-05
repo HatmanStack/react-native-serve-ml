@@ -36,7 +36,7 @@ export default function App() {
   useEffect(() => {
     if (parameters != ''){
       setActivity(true);
-      axios.post("http://localhost:8081/api", {
+      axios.post("https://react-native-serve-ml-ervjof6qfq-uc.a.run.app/api", {
       // Create Body to send to our backend
       prompt: prompt,
       steps: steps,

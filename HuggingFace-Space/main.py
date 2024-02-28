@@ -36,7 +36,7 @@ async def inference(item: Item):
     data = {"inputs":prompt, "options":{"wait_for_model": True, "use_cache": False}}
     API_URL = "https://api-inference.huggingface.co/models/" + item.modelID
 
-    headers = {"Authorization": f"Bearer " + token}
+    headers = {"Authorization": f"Bearer {token}"}
     api_data = json.dumps(data)
     response = requests.request("POST", API_URL, headers=headers, data=api_data)
 

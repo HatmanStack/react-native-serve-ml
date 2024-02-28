@@ -10,7 +10,8 @@ from diffusers import StableDiffusionPipeline
 origins = ["http://127.0.0.1:19006",
 "http://127.0.0.1:19006/api",
 "http://localhost:19006",
-"http://localhost:19006/api"]
+"http://localhost:19006/api",
+"http://0.0.0.0:19006"]
 
 middleware = [
     Middleware(
@@ -32,6 +33,7 @@ class Item(BaseModel):
 
 @app.post("/api")
 async def inference(item: Item):
+    print(item.prompt)
     if "dallinmackay" in item.modelID:
         prompt = "lvngvncnt, " + item.prompt
     if "nousr" in item.modelID:
